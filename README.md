@@ -35,7 +35,7 @@ The easiest way to keep your suite updated is to use [Composer](http://getcompos
 #### Install with composer:
 
 ```bash
-$ composer require --dev emuse/behat-html-formatter
+$ composer require --dev cckakhandki/behat-html-formatter
 ```
 
 #### Install using `composer.json`
@@ -126,6 +126,7 @@ Additionally you can use step: `I take screenshot pf current page` to take scree
 
 `screenshot_name` will be in the following format:
 BrowserName-Y-m-d-H-i-s.png
+e.g - firefox-2016-04-17-15-06-16.png
 
 ## Issue Submission
 
