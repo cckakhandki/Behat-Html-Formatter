@@ -3,7 +3,7 @@
     "description": "This will create a html formatter for Behat.",
     "authors": [
         {
-            "name": "Neal Vanmeert"
+            "name": "Chetan Kakhandki"
         }
     ],
     "require": {
