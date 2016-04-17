@@ -2,14 +2,15 @@
 
 Behat 3 extension for generating HTML reports from your test results.
 
+This is a fork from https://github.com/dutchiexl/BehatHtmlFormatterPlugin
+I have updated the plugin for screenshots. It can take screenshot on failure.
 
 ### Twig report
 
 ![Twig Screenshot](http://i.imgur.com/o0zCqiB.png)
 
 ### Behat 2 report
-
-![Behat2 Screenshot](http://i57.tinypic.com/287g942.jpg)
+![Behat2 Screenshot](http://i68.tinypic.com/15p5nox.jpg)
 
 
 ## How?
@@ -41,11 +42,15 @@ $ composer require --dev emuse/behat-html-formatter
 
 Add BehatHtmlFormatterPlugin to the list of dependencies inside your `composer.json`.
 
+```
+Not yet available on packagist.org
+```
+
 ```json
 {
     "require": {
         "behat/behat": "3.*@stable",
-        "emuse/behat-html-formatter": "0.1.*",
+        "cckakhandki/behat-html-formatter": "0.2.*",
     },
     "minimum-stability": "dev",
     "config": {
@@ -74,17 +79,17 @@ default:
   
   formatters: 
     html:
-      output_path: %paths.base%/build/html/behat
+      output_path: %paths.base%/../Reports
       
   extensions:
-    emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+    cckakhandki\BehatHTMLFormatter\BehatHTMLFormatterExtension:
       name: html
       renderer: Twig,Behat2
       file_name: index
       print_args: true
       print_outp: true
       loop_break: true
-      screenshot_folder: Screenshot
+      screenshot_folder: Reports/`screenshot_folder`
 ```
 
 ## Configuration
@@ -103,18 +108,33 @@ default:
 ## Screenshot
 
 The facility exists to embed a screenshot into test failures.
+Currently png is the only supported image format
 
-Currently png is the only supported image format.
+In order to embed a screenshot, you have to use the provided screenshot context:
 
-In order to embed a screenshot, you will need to take a screenshot using your favourite webdriver and store it in the following filepath format:
+```
+In yml add following:
 
-reports/`screenshot_folder`/{{screenshot_name}}.png
+- cckakhandki\BehatHTMLFormatter\Context\BehatScreenshotContext:
+    screenshot_path: %paths.base%/../Reports/`screenshot_folder`
+    
+```
+Screenshots will be stored at path:
+     %paths.base%/../Reports/`screenshot_folder`/{{screenshot_name}}.png
+     
+Additionally you can use step: `I take screenshot pf current page` to take screenshot at any time in scenario.
 
-Note that the currentScenario variable will need to be at class level and generated in the @BeforeScenario method as Behat does not currently support obtaining the current Scenario in the @AfterStep method, where the screenshot is generated 
+`screenshot_name` will be in the following format:
+BrowserName-Y-m-d-H-i-s.png
 
 ## Issue Submission
 
 When you need additional support or you discover something *strange*, feel free to [Create a new issue](https://github.com/cckakhandki/BehatHtmlFormatterPlugin/issues/new).
+
+
+## TO DO
+1. Embed Screenshots in TWIG report
+2. Fix argument display in reports
 
 ## License and Authors
 
