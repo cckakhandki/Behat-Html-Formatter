@@ -1,10 +1,9 @@
 {
-    "name": "emuse/behat-html-formatter",
+    "name": "cckakhandki/behat-html-formatter",
     "description": "This will create a html formatter for Behat.",
     "authors": [
         {
-            "name": "Neal Vanmeert",
-            "email": "neal@emuse.be"
+            "name": "Neal Vanmeert"
         }
     ],
     "require": {
@@ -19,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "emuse\\BehatHTMLFormatter\\": "src/"
+            "cckakhandki\\BehatHTMLFormatter\\": "src/"
         }
     }
 }
