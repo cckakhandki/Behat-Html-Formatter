@@ -1,7 +1,7 @@
 default:
     formatters:
         html:
-            output_path: %paths.base%/report
+            output_path: %paths.base%/../Report
         pretty: ~
 
     extensions:
@@ -12,3 +12,4 @@ default:
             print_args: true
             print_outp: true
             loop_break: true
+            screenshot_folder: Reports/screenshot_folder
