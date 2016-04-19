@@ -22,6 +22,7 @@ class Step
     private $output;
     private $definition;
     private $screenshot;
+    private $argumentType;
 
     /**
      * @param string $screenshot
@@ -69,6 +70,22 @@ class Step
     }
 
     /**
+     * @return mixed
+     */
+    public function getArgumentType()
+    {
+    	return $this->argumentType;
+    }
+    
+    /**
+     * @param mixed $arguments
+     */
+    public function setArgumentType($argumentType)
+    {
+    	$this->argumentType = $argumentType;
+    }
+
+	/**
      * @return mixed
      */
     public function getArguments()

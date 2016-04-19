@@ -534,7 +534,7 @@ class BehatHTMLFormatter implements Formatter {
         $scenario = new Scenario();
         $scenario->setName($event->getOutline()->getTitle());
         $scenario->setTags($event->getOutline()->getTags());
-        $scenario->setLine($event->getOutline()->getLine());        
+        $scenario->setLine($event->getOutline()->getLine());
         $this->currentScenario = $scenario;
 
         $print = $this->renderer->renderBeforeOutline($this);
@@ -580,16 +580,20 @@ class BehatHTMLFormatter implements Formatter {
     {
         $result = $event->getTestResult();
 
-        //$this->dumpObj($event->getStep()->getArguments());
-        /** @var Step $step */
+        /** @var object $step */
         $step = new Step();
         $step->setKeyword($event->getStep()->getKeyword());
         $step->setText($event->getStep()->getText());
         $step->setLine($event->getStep()->getLine());
-        $step->setArguments($event->getStep()->getArguments());
         $step->setResult($result);
         $step->setResultCode($result->getResultCode());
 
+        if ($event->getStep()->hasArguments()){
+        	$object = $this->getObject($event->getStep()->getArguments());
+        	$step->setArgumentType($object->getNodeType());
+        	$step->setArguments($object);
+        }
+        
         if($step->getResultCode() == '99'){
         	$environment = $event->getEnvironment();
         	$screenshotContext = $environment->getContext('cckakhandki\BehatHTMLFormatter\Context\BehatScreenshotContext');
@@ -630,22 +634,12 @@ class BehatHTMLFormatter implements Formatter {
     }
     //</editor-fold>
 
-    /**
-     * @param $text
+	/**
+     * @param $arguments
      */
-    public function printText($text)
-    {
-        file_put_contents('php://stdout', $text);
-    }
-
-    /**
-     * @param $obj
-     */
-    public function dumpObj($obj)
-    {
-        ob_start();
-        var_dump($obj);
-        $result = ob_get_clean();
-        $this->printText($result);
+    public function getObject($arguments){
+    	foreach ($arguments as $argument => $args){
+    		return $args;
+    	}
     }
 }
