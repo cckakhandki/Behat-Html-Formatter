@@ -589,16 +589,16 @@ class BehatHTMLFormatter implements Formatter {
         $step->setResultCode($result->getResultCode());
 
         if ($event->getStep()->hasArguments()){
-        	$object = $this->getObject($event->getStep()->getArguments());
-        	$step->setArgumentType($object->getNodeType());
-        	$step->setArguments($object);
+            $object = $this->getObject($event->getStep()->getArguments());
+            $step->setArgumentType($object->getNodeType());
+            $step->setArguments($object);
         }
-        
+
         if($step->getResultCode() == '99'){
-        	$environment = $event->getEnvironment();
-        	$screenshotContext = $environment->getContext('cckakhandki\BehatHTMLFormatter\Context\BehatScreenshotContext');
-        	$screenshot = $screenshotContext->getScreenshot(true);
-        	$step->setScreenshotName($screenshot);
+            $environment = $event->getEnvironment();
+            $screenshotContext = $environment->getContext('cckakhandki\BehatHTMLFormatter\Context\ScreenshotContext');
+            $screenshot = $screenshotContext->getScreenshot(true);
+            $step->setScreenshotName($screenshot);
         }
         
         //What is the result of this step ?
@@ -634,12 +634,12 @@ class BehatHTMLFormatter implements Formatter {
     }
     //</editor-fold>
 
-	/**
+    /**
      * @param $arguments
      */
     public function getObject($arguments){
-    	foreach ($arguments as $argument => $args){
-    		return $args;
-    	}
+        foreach ($arguments as $argument => $args){
+            return $args;
+        }
     }
 }

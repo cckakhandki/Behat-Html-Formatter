@@ -28,13 +28,13 @@ class Step
      * @param string $screenshot
      */
     public function setScreenshotName($screenshot){
-    	$this->screenshot = $screenshot;
+        $this->screenshot = $screenshot;
     }
     /**
      * @return string
      */
     public function getScreenshotName(){
-    	return $this->screenshot;
+        return $this->screenshot;
     }
     
     /**
@@ -74,7 +74,7 @@ class Step
      */
     public function getArgumentType()
     {
-    	return $this->argumentType;
+        return $this->argumentType;
     }
     
     /**
@@ -82,7 +82,7 @@ class Step
      */
     public function setArgumentType($argumentType)
     {
-    	$this->argumentType = $argumentType;
+        $this->argumentType = $argumentType;
     }
 
 	/**
