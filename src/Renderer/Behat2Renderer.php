@@ -400,7 +400,7 @@ class Behat2Renderer implements RendererInterface {
                         <pre class="backtrace">'.$step->getException().'</pre>';
             if(file_exists($fullScreenshotPath))
             {
-                $print .= '<a href="' . $relativeScreenshotPath . '" target="_blank">Screenshot</a>';
+                $print .= '<a href="' . $relativeScreenshotPath . '" target="_blank">View Screenshot</a>';
             }
             
         }
