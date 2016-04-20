@@ -580,7 +580,7 @@ class BehatHTMLFormatter implements Formatter {
     {
         $result = $event->getTestResult();
 
-        /** @var object $step */
+        /** @var Step $step */
         $step = new Step();
         $step->setKeyword($event->getStep()->getKeyword());
         $step->setText($event->getStep()->getText());

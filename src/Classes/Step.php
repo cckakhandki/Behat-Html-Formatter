@@ -85,7 +85,7 @@ class Step
         $this->argumentType = $argumentType;
     }
 
-	/**
+    /**
      * @return mixed
      */
     public function getArguments()
