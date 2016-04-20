@@ -22,18 +22,19 @@ class Step
     private $output;
     private $definition;
     private $screenshot;
+    private $argumentType;
 
     /**
      * @param string $screenshot
      */
     public function setScreenshotName($screenshot){
-    	$this->screenshot = $screenshot;
+        $this->screenshot = $screenshot;
     }
     /**
      * @return string
      */
     public function getScreenshotName(){
-    	return $this->screenshot;
+        return $this->screenshot;
     }
     
     /**
@@ -66,6 +67,22 @@ class Step
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArgumentType()
+    {
+        return $this->argumentType;
+    }
+    
+    /**
+     * @param mixed $arguments
+     */
+    public function setArgumentType($argumentType)
+    {
+        $this->argumentType = $argumentType;
     }
 
     /**
