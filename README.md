@@ -131,9 +131,9 @@ In yml add following:
 Options:
 
 * `print_url` - (Optional) `Yes` if you want to print the url of the webpage on the screenshot.
-* `text_color` - (Otional) Color of the text. It should be a Hex value. Default value is #ffffff.
-* `x` - (Optional) X-coordinate on the image.
-* `y` - (Optional) Y-coordinate on the image.
+* `text_color` - (Otional) Color of the text. It should be a Hex value. Default value is `#ffffff`.
+* `x` - (Optional) X-coordinate on the image. Default value is: 50
+* `y` - (Optional) Y-coordinate on the image. Default value is: 25
 
 
 Screenshots will be stored at path:
