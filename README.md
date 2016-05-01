@@ -48,9 +48,13 @@ Not yet available on packagist.org
 
 ```json
 {
+    "repositories": [{
+        "type": "vcs",
+         "url": "https://github.com/cckakhandki/Behat-Html-Formatter"
+    }],
     "require": {
         "behat/behat": "3.*@stable",
-        "cckakhandki/behat-html-formatter": "0.2.*",
+        "cckakhandki/behat-html-formatter": "0.3.*",
     },
     "minimum-stability": "dev",
     "config": {
@@ -117,8 +121,21 @@ In yml add following:
 
 - cckakhandki\BehatHTMLFormatter\Context\BehatScreenshotContext:
     screenshot_path: %paths.base%/../Reports/`screenshot_folder`
+    print_url: 'yes'
+    text_color: '#000000'
+    x: 100
+    y: 30
     
 ```
+
+Options:
+`print_url` - (Optional) `Yes` if you want to print the url of the webpage on the screenshot.
+`text_color` - (Otional) Color of the text. It should be a Hex value. Default value is #ffffff.
+`x` - X-coordinate on the image.
+`y` - Y-coordinate on the image.
+
+===============================================================================================================================
+
 Screenshots will be stored at path:
      %paths.base%/../Reports/`screenshot_folder`/{{screenshot_name}}.png
      
@@ -127,6 +144,7 @@ Additionally you can use step: `I take screenshot pf current page` to take scree
 `screenshot_name` will be in the following format:
 BrowserName-Y-m-d-H-i-s.png
 e.g - firefox-2016-04-17-15-06-16.png
+
 
 ## Issue Submission
 

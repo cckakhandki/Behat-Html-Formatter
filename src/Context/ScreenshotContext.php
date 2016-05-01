@@ -31,10 +31,11 @@ class ScreenshotContext implements SnippetAcceptingContext {
     public function __construct($screenshot_path, $print_url = 'no', $text_color = '#ffffff', $x=50, $y=25) {
         $this->output_path = $screenshot_path;
         $this->print_url = $print_url;
-        $this->text_color = $text_color;
-        $this->x = $x;
-        $this->y = $y;
-        var_dump($x . PHP_EOL . $y);
+        if (strcasecmp($this->print_url, 'yes') == 0) {
+            $this->text_color = $text_color;
+            $this->x = $x;
+            $this->y = $y;
+        }
     }
     
     /**
@@ -57,6 +58,7 @@ class ScreenshotContext implements SnippetAcceptingContext {
         $this->minkContext->saveScreenshot($fileName, $this->output_path);
         $screenshot_path = $this->output_path . '/' . $fileName;
         print "Screenshot saved at : " . realpath($screenshot_path);
+        // Print url of the cuurent page on the screenshot.
         if (strcasecmp($this->print_url, 'yes') == 0) {
             $url = $this->minkContext->getSession()->getCurrentUrl();
             $image = imagecreatefrompng(realpath($screenshot_path));
