@@ -10,6 +10,13 @@ use Behat\Gherkin\Node\TableNode;
 
 class Behat2Renderer implements RendererInterface {
 
+	/**
+	 * Maximum line length.
+	 *
+	 * @var integer
+	 */
+	protected $maxLineLength = 0;
+	
     /**
      * Renders before an exercice.
      * @param object : BehatHTMLFormatter object
@@ -50,6 +57,11 @@ class Behat2Renderer implements RendererInterface {
             $sumRes = 'failed';
         }
 
+        $strFeatSkipped = '';
+        if(count($obj->getSkippedFeatures()) > 0) {
+            $strFeatSkipped = ' <strong class="skipped">'.count($obj->getSkippedFeatures()).' skipped</strong>';
+        }
+        
         //--> scenarios results
         $strScePassed = '';
         if(count($obj->getPassedScenarios()) > 0) {
@@ -59,6 +71,11 @@ class Behat2Renderer implements RendererInterface {
         $strSceFailed = '';
         if(count($obj->getFailedScenarios()) > 0) {
             $strSceFailed = ' <strong class="failed">'.count($obj->getFailedScenarios()).' fail</strong>';
+        }
+        
+        $strSceSkipped = '';
+        if(count($obj->getSkippedScenarios()) > 0) {
+          $strSceSkipped = ' <strong class="skipped">'.count($obj->getSkippedScenarios()).' skipped</strong>';
         }
 
         //--> steps results
@@ -83,8 +100,8 @@ class Behat2Renderer implements RendererInterface {
         }
 
         //totals
-        $featTotal = (count($obj->getFailedFeatures()) + count($obj->getPassedFeatures()));
-        $sceTotal = (count($obj->getFailedScenarios()) + count($obj->getPassedScenarios()));
+        $featTotal = (count($obj->getFailedFeatures()) + count($obj->getPassedFeatures()) + count($obj->getSkippedFeatures()));
+        $sceTotal = (count($obj->getFailedScenarios()) + count($obj->getPassedScenarios()) + count($obj->getSkippedScenarios()));
         $stepsTotal = (count($obj->getFailedSteps()) + count($obj->getPassedSteps()) + count($obj->getSkippedSteps()) + count($obj->getPendingSteps()));
 
         //list of pending steps to display
@@ -105,10 +122,10 @@ class Behat2Renderer implements RendererInterface {
         <div class="summary '.$sumRes.'">
             <div class="counters">
                 <p class="features">
-                    '.$featTotal.' features ('.$strFeatPassed.$strFeatFailed.' )
+                    '.$featTotal.' features ('.$strFeatPassed.$strFeatFailed.$strFeatSkipped.' )
                 </p>
                 <p class="scenarios">
-                    '.$sceTotal.' scenarios ('.$strScePassed.$strSceFailed.' )
+                    '.$sceTotal.' scenarios ('.$strScePassed.$strSceFailed.$strSceSkipped.' )
                 </p>
                 <p class="steps">
                     '.$stepsTotal.' steps ('.$strStepsPassed.$strStepsPending.$strStepsSkipped.$strStepsFailed.' )
@@ -226,14 +243,16 @@ class Behat2Renderer implements RendererInterface {
         $print .= '
                 </ul>';
 
+        $scenarioName = $obj->getCurrentScenario()->getName();
+        $path = $obj->getCurrentFeature()->getFile() . ':' . $obj->getCurrentScenario()->getLine();
+        
         $print .= '
                 <h3>
                     <span class="keyword">'.$obj->getCurrentScenario()->getId().' Scenario: </span>
                     <span class="title">'.$obj->getCurrentScenario()->getName().'</span>
+                    <span class="path">'.$this->printPathComment($scenarioName, $path).'</span>
                 </h3>
                 <ol>';
-
-        //TODO path is missing
 
         return $print;
     }
@@ -269,19 +288,37 @@ class Behat2Renderer implements RendererInterface {
         }
         $print .= '
                 </ul>';
-
+        
+        $scenarioName = $obj->getCurrentScenario()->getName();
+        $path = $obj->getCurrentFeature()->getFile() . ':' . $obj->getCurrentScenario()->getLine();
+        
         $print .= '
                 <h3>
                     <span class="keyword">'.$obj->getCurrentScenario()->getId().' Scenario Outline: </span>
                     <span class="title">'.$obj->getCurrentScenario()->getName().'</span>
+                    <span class="path">'.$this->printPathComment($scenarioName, $path).'</span>
                 </h3>
                 <ol>';
-
-        //TODO path is missing
 
         return $print;
     }
 
+    /**
+     * Helper function to print scenario path on the report.
+     * 
+     * @param string $scenarioName
+     * @param string $path
+     * @return string
+     */
+    public function printPathComment($scenarioName, $path)
+    {
+    	$indentCount = 0;
+    	$nameLength  = mb_strlen($scenarioName);
+    	$indentCount = $nameLength > $this->maxLineLength ? 0 : $this->maxLineLength - $nameLength;
+    	$indent = str_repeat(' ', $indentCount);
+    	return "$indent $path";
+    }
+    
     /**
      * Renders after an outline.
      * @param object : BehatHTMLFormatter object
