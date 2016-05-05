@@ -57,7 +57,7 @@ class ScreenshotContext implements SnippetAcceptingContext {
         $fileName = $browser . '-' . date('Y-m-d-H-i-s') . '.png';
         $this->minkContext->saveScreenshot($fileName, $this->output_path);
         $screenshot_path = $this->output_path . '/' . $fileName;
-        print "Screenshot saved at : " . realpath($screenshot_path);
+        print "Screenshot saved at : " . realpath($screenshot_path) . PHP_EOL;
         // Print url of the cuurent page on the screenshot.
         if (strcasecmp($this->print_url, 'yes') == 0) {
             $url = $this->minkContext->getSession()->getCurrentUrl();
